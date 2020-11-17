@@ -1,1 +1,1 @@
-CustomSettingHelper.initializeAppSettings();
+CpmServerCustomSettingHelper.initializeAppSettings();

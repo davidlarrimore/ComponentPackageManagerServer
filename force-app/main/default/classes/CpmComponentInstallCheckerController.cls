@@ -5,8 +5,8 @@ public with sharing class CpmComponentInstallCheckerController {
         System.debug('Running CPMInstallCheckerController.runApex');
         List<AsyncApexJob> existingJobs;
 
-        Demo_Component_Manager_Settings__c appSetting = new Demo_Component_Manager_Settings__c();
-        List<Demo_Component_Manager_Settings__c> appSettings = [SELECT Id, Last_Library_Refresh_Date__c FROM Demo_Component_Manager_Settings__c];
+        Cpm_Server_Settings__c appSetting = new Cpm_Server_Settings__c();
+        List<Cpm_Server_Settings__c> appSettings = [SELECT Id, Last_Library_Refresh_Date__c FROM Cpm_Server_Settings__c];
 
         if(appSettings.size() == 0){
             System.debug('Initializing appSettings');
@@ -24,21 +24,21 @@ public with sharing class CpmComponentInstallCheckerController {
             appSetting.Last_Library_Refresh_Date__c = datetime.now();
             update appSetting;
             
-            QueueGetInstalledPackages queueGetInstalledPackagesJob = new QueueGetInstalledPackages();
-            existingJobs = [SELECT Id, ApexClass.Name, Status FROM AsyncApexJob WHERE Status IN ('Holding','Queued','Preparing','Processing') AND ApexClass.Name = :queueGetInstalledPackagesJob.getJobInfo(QueuePlatformAsyncEventHelper.FIELD_APEX_CLASS_NAME) LIMIT 1];
+            CpmQGetInstalledPackages queueGetInstalledPackagesJob = new CpmQGetInstalledPackages();
+            existingJobs = [SELECT Id, ApexClass.Name, Status FROM AsyncApexJob WHERE Status IN ('Holding','Queued','Preparing','Processing') AND ApexClass.Name = :queueGetInstalledPackagesJob.getJobInfo(CpmAsyncEventHelper.FIELD_APEX_CLASS_NAME) LIMIT 1];
             if (existingJobs.size() == 0){
                 System.debug('Running queueGetInstalledPackagesJob');
                 System.enqueueJob(queueGetInstalledPackagesJob);
             }
-            VersionHelper.getinstalledXTAGs(null);
+            CpmVersionHelper.getinstalledXTAGs(null);
         }else{
             System.debug('Not Running refresh');
         }
     }
 
     @AuraEnabled
-    public static Demo_Component_Manager_Settings__c getAppSettings(){ 
+    public static Cpm_Server_Settings__c getAppSettings(){ 
         System.debug('Running CPMInstallCheckerController.getAppSettings');
-        return CustomSettingHelper.getAppSettings();
+        return CpmServerCustomSettingHelper.getAppSettings();
     }    
 }
