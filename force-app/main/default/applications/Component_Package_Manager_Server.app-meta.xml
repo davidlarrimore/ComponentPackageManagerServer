@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Cpm_Server_Component_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Cpm_Component_Package__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Cpm_Server_Component_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Cpm_Component_Package__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Tab</actionName>
         <content>Cpm_Server_Home</content>
         <formFactor>Large</formFactor>
@@ -10,7 +28,7 @@
     </actionOverrides>
     <brand>
         <headerColor>#568EB5</headerColor>
-        <logo>cpm_logo</logo>
+        <logo>cpm_server_logo</logo>
         <logoVersion>1</logoVersion>
         <shouldOverrideOrgTheme>true</shouldOverrideOrgTheme>
     </brand>
@@ -19,7 +37,7 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>true</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>true</isNavPersonalizationDisabled>
-    <label>Component Package Manager Server</label>
+    <label>CPM Server</label>
     <navType>Standard</navType>
     <tabs>standard-home</tabs>
     <tabs>Cpm_Component_Package__c</tabs>

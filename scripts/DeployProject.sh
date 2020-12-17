@@ -1,6 +1,6 @@
 
 echo "*** Run Test Cases W\Coverage ..."
-sfdx force:apex:test:run -c -u CDOPackageManager -r human
+sfdx force:apex:test:run -c -r human
 
 #No Longer Needed
 #echo "*** Creating Managed Package ..."

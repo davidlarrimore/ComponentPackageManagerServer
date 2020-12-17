@@ -10,7 +10,6 @@ export default class CpmComponentAvailableListView extends LightningElement {
     return 0;
   }
   
-
   get hasRows(){
     if(this.demoComponents && this.demoComponents.length > 0){
       return true;

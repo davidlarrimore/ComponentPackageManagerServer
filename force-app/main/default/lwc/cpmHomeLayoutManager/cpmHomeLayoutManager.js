@@ -8,7 +8,6 @@ import appSettings from "@salesforce/apex/CpmComponentInstallCheckerController.g
 
 export default class CmpHomeLayoutManager extends LightningElement {
   availableDemoComponents;
-  installedDemoComponents;
 
   channelName = "/event/Cpm_Component_Package_Update__e";
   isSubscribed = false;
@@ -18,7 +17,6 @@ export default class CmpHomeLayoutManager extends LightningElement {
 
   @track demoComponentManagerSettings;
   @track calvSearchstring = '';
-  @track cinstSearchstring = '';
 
   @track error;
 
@@ -71,51 +69,6 @@ export default class CmpHomeLayoutManager extends LightningElement {
       }
   }
 
-
-  @wire(APXInstalledDemoComponents, {searchString: '$cinstSearchstring'})
-  wiredAPXInstalledDemoComponents({ error, data }) {
-      if (data) {
-        console.log("CmpHomeLayoutManager.wiredAPXAvailableDemoComponents SUCCESS");
-        console.log(`Found ${data.length} installedDemoComponents`);
-        let dataloop = [];
-        for (let i = 0; i < data.length; i++) {
-          let tempRecord = Object.assign({}, data[i]);
-          tempRecord.Record_Url = '/'+data[i].Id;
-
-          if(tempRecord.Installed__c && tempRecord.Installation_Type__c === 'Package'){
-            tempRecord.Is_Package_Installed_Type = true;
-          }else{
-            tempRecord.Is_Package_Installed_Type = false;
-          }
-
-          if(tempRecord.Installed__c && tempRecord.Installation_Type__c === 'Source'){
-            tempRecord.Is_Source_Installed_Type = true;
-          }else{
-            tempRecord.Is_Source_Installed_Type = false;
-          }
-
-          if(undefined !== data[i].Description__c){ 
-            let newDescription = data[i].Description__c;
-              if(newDescription.length > 60){ 
-                tempRecord.Description_Short = newDescription.substring(0, 60) + '...';
-              }else{
-                tempRecord.Description_Short = newDescription;
-              }
-        
-          }
-          dataloop.push(tempRecord);
-        }
-
-        this.installedDemoComponents = dataloop;
-        this.error = undefined;
-      } else if (error) {
-          this.error = error;
-          console.log(`CmpHomeLayoutManager.APXInstalledDemoComponents ERROR: ${JSON.stringify(error)}`);
-          this.serviceItems = undefined;
-      }
-  }
-
-
   doDemoComponentRefresh() {
     APXAvailableDemoComponents()
       .then((data) => {
@@ -148,41 +101,7 @@ export default class CmpHomeLayoutManager extends LightningElement {
         );
       });
 
-    APXInstalledDemoComponents({ searchString: null })
-      .then((data) => {
-        console.log("CmpHomeLayoutManager.APXInstalledDemoComponents SUCCESS");
-        console.log(`Found ${data.length} availableDemoComponents`);
 
-        let dataloop = data;
-
-        for (let i = 0; i < dataloop.length; i++) {
-          dataloop[i].Record_Url = '/'+dataloop[i].Id;
-
-          if(dataloop[i].Installed__c && dataloop[i].Installation_Type__c === 'Package'){
-            dataloop[i].Is_Package_Installed_Type = true;
-          }else{
-            dataloop[i].Is_Package_Installed_Type = false;
-          }
-
-          if(dataloop[i].Installed__c && dataloop[i].Installation_Type__c === 'Source'){
-            dataloop[i].Is_Source_Installed_Type = true;
-          }else{
-            dataloop[i].Is_Source_Installed_Type = false;
-          }
-
-        }
-
-        this.installedDemoComponents = dataloop;
-        this.error = undefined;
-      })
-      .catch((error) => {
-        this.error = error;
-        console.log(
-          `CmpHomeLayoutManager APXInstalledDemoComponents ERROR: ${JSON.stringify(
-            error
-          )}`
-        );
-      });
   }
 
 
@@ -227,12 +146,6 @@ export default class CmpHomeLayoutManager extends LightningElement {
   handleCalvSearchstring(event) {
     this.calvSearchstring = event.detail;
     console.log(`hanldeCalvSearchstring: ${this.calvSearchstring}`);
-  }
-
-
-  handleCinstSearchstring(event) {
-    this.cinstSearchstring = event.detail;
-    console.log(`hanldeCinstSearchstring: ${this.cinstSearchstring}`);
   }
 
   handleComponentRefreshRequest(event){

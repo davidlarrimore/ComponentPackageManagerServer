@@ -1,5 +1,5 @@
 <template>
-	<lightning-card title="Available Demo Components" icon-name="custom:custom57">
+	<lightning-card title="Demo Components" icon-name="custom:custom57">
 		<div slot="actions">
 			<lightning-input type="search" label="Search" onchange={updateSearch}></lightning-input>
 		</div>
@@ -56,18 +56,7 @@
 									<td data-label="Description" class="slds-cell-wrap" scope="row">{demoComponent.Description_Short}</td>
 									<td data-label="Actions" class="slds-text-align_left" scope="row">
 										<div class="slds-button-group" role="group">
-											<template if:false={demoComponent.Latest_Package_Version_Deprecated_Flag__c}>
-												<template if:true={demoComponent.Dependencies_Met__c}>
-													<a class="slds-button slds-button_neutral" if:true={demoComponent.Package_Install_Type_Flag__c} href={demoComponent.Package_Install_Url__c} target="_blank">Install Pkg</a>
-													<a class="slds-button slds-button_neutral" if:true={demoComponent.Source_Install_Type_Flag__c} href={demoComponent.Source_Install_Url__c} target="_blank">Install Src</a>
-												</template>
-												<template if:false={demoComponent.Dependencies_Met__c}>
-													<lightning-badge label="Dependencies not met"></lightning-badge>
-												</template>	
-											</template>		
-											<template if:true={demoComponent.Latest_Package_Version_Deprecated_Flag__c}>
-												<lightning-badge class="slds-theme_warning" label="Deprecated"></lightning-badge>
-											</template>																				
+																													
 										</div>							
 									</td>								
 								</tr>
